@@ -1,0 +1,128 @@
+char cmd;
+boolean run = false;
+int enA = 4 ;
+int motorpin = 5 ;
+int motorpin2 = 6 ;
+int enB = 10 ;
+int motorpin3 = 8 ;
+int motorpin4 = 9 ;
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(enA,OUTPUT);
+  pinMode(motorpin,OUTPUT);
+  pinMode(motorpin2,OUTPUT);
+  pinMode(enB,OUTPUT);
+  pinMode(motorpin3,OUTPUT);
+  pinMode(motorpin4,OUTPUT);
+}
+
+
+void forward()
+{
+//  digitalWrite(enA,HIGH);
+ // digitalWrite(enB,HIGH);
+  digitalWrite(motorpin,HIGH);
+  digitalWrite(motorpin2,LOW);
+  digitalWrite(motorpin3,HIGH);
+  digitalWrite(motorpin4,LOW);
+}
+void back()
+{
+//  digitalWrite(enA,HIGH);
+ // digitalWrite(enB,HIGH);
+  digitalWrite(motorpin,LOW);
+  digitalWrite(motorpin2,HIGH);
+  digitalWrite(motorpin3,LOW);
+  digitalWrite(motorpin4,HIGH);
+}
+void right()
+{
+ // digitalWrite(enA,HIGH);
+ // digitalWrite(enB,HIGH);
+  digitalWrite(motorpin,HIGH);
+  digitalWrite(motorpin2,LOW);
+  digitalWrite(motorpin3,LOW);
+  digitalWrite(motorpin4,LOW);
+}
+void left()
+{
+//  digitalWrite(enA,HIGH);
+//  digitalWrite(enB,HIGH);
+  digitalWrite(motorpin,LOW);
+  digitalWrite(motorpin2,LOW);
+  digitalWrite(motorpin3,HIGH);
+  digitalWrite(motorpin4,LOW);
+}
+void stopmotor()
+{
+//  digitalWrite(enA,HIGH);
+//  digitalWrite(enB,HIGH);
+  digitalWrite(motorpin,LOW);
+  digitalWrite(motorpin2,LOW);
+  digitalWrite(motorpin3,LOW);
+  digitalWrite(motorpin4,LOW);
+}
+
+void test()
+{
+
+  forward();
+  delay(1000);
+  stopmotor();
+  delay(500);
+  back();
+  delay(1000);
+  stopmotor();
+  delay(500);
+  left();
+  delay(1000);
+  stopmotor();
+  delay(500);
+  right();
+  delay(1000);
+  stopmotor();
+  delay(500);
+}
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+    if(Serial.available() > 0 )
+  {
+    cmd = Serial.read();
+    switch(cmd)
+    {
+      case'w':
+      forward();
+      run = true ;
+      break ;
+      case's':
+      back();
+      run = true ;
+      break ;
+      case'd':
+      right();
+      run = true ;
+      break ;
+      case'a':
+      left();
+      run = true ;
+      break ;
+      case'p':
+      stopmotor();
+      run = true ;
+      break ;
+    }
+  }
+  if(run)
+  {
+    analogWrite(enA,1000);
+    analogWrite(enB,1000);
+  }else{
+     analogWrite(enA,0);
+    analogWrite(enB,0);
+  }
+//  test();
+}
+

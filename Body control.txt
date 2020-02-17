@@ -1,0 +1,177 @@
+#include <Servo.h>
+char cmd;
+int button = 10;
+int buttonState = 0; 
+Servo left_Hand;
+Servo right_Hand;
+Servo Head;
+int start=0;
+void setup() {
+  // put your setup code here, to run once:
+    Serial.begin(9600);
+  pinMode(button,INPUT);
+  left_Hand.attach(A1); 
+  right_Hand.attach(A0);
+  Head.attach(A2);
+}
+//Input String
+String NewString()
+{
+      String s = "";
+    while (Serial.available()) {
+        char c = Serial.read();
+        if(c!='\n'){
+            s += c;
+        }
+        delay(5);    
+    }
+     if(s!=""){
+        Serial.println(s); 
+    }
+      return s;
+    
+}
+//End
+//Head Control
+void look_right()
+{
+  Head.write(40);
+}
+void look_left()
+{
+   Head.write(160);
+}
+void look_forward()
+{
+   Head.write(100);
+}
+void shake_head()
+{
+  look_right();
+  delay(800);
+  look_left();
+  delay(800);
+}
+//End
+//Hand Control
+void left_hand_up()
+{
+  left_Hand.write(30);
+}
+void left_hand_down()
+{
+  left_Hand.write(100);
+}
+void right_hand_up()
+{
+  right_Hand.write(180);
+}
+void right_hand_down()
+{
+  right_Hand.write(110);
+}
+void both_hands_up()
+{
+  left_hand_up();
+  right_hand_up();
+}
+void both_hands_down()
+{
+  left_hand_down();
+  right_hand_down();
+}
+//End
+
+void stand_up()
+{
+  look_forward();
+  both_hands_down();
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if( start==0)
+  {
+   stand_up();
+   start=1;
+  }
+      String str =NewString();
+      int i = 0 ;
+      if(str=="left hand up")
+      {
+        left_hand_up();
+        delay(1000);
+      }else if(str=="left hand down")
+      {
+        left_hand_down();
+        delay(1000);
+      }else if(str=="right hand up")
+      {
+        right_hand_up();
+        delay(1000);
+      }else if(str=="right hand down")
+      {
+        right_hand_down();
+        delay(1000);
+      }else if(str=="hands up"||str=="Long Live")
+      {
+        both_hands_up();
+        delay(1000);
+      }else if(str=="hands down")
+      {
+         both_hands_down();
+        delay(1000);
+      }else if(str=="look right")
+      {
+        look_right();
+        delay(1000);
+      }else if(str=="look left")
+      {
+        look_left();
+        delay(1000);
+      }else if(str=="look forward")
+      {
+        look_forward();
+        delay(1000);
+      }else if(str=="NO")
+      {
+        while(true){
+          i+=1;
+         shake_head();
+        if(i==5)
+        {
+          look_forward();
+          break;
+        }
+        }  
+      }else if(str=="Warm up")
+      {
+        while(true)
+        {
+           i+=1;
+         right_hand_up();
+         delay(500); 
+         right_hand_down();
+        delay(500);
+        left_hand_up();
+        delay(500);
+        left_hand_down();
+        delay(500);
+        both_hands_up();
+        delay(500);
+        both_hands_down();
+        delay(500);
+        if(i==5)
+        {
+          shake_head();
+           look_forward();
+          break;
+        }
+        }
+      }
+      if(str=="stand up")
+      {
+        stand_up();
+      }
+
+}
