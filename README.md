@@ -16,4 +16,4 @@ https://docs.google.com/presentation/d/1vKjzN4swv_pjnXWss-UTss4iHGFxYL9SXKfXatZP
 https://docs.google.com/document/d/1ASfDPWhAHS2S4-RhS2ID_vBQrZVcr_5N6LzgPh_lVhc/edit?usp=sharing
 
 # Demo Video
-[tinyurl.com/gti2018-walle-robot](tinyurl.com/gti2018-walle-robot)
+[gti2018-walle-robot-demo](https://drive.google.com/file/d/1iN1NGW8EEQl8gA6JNFDHvS8DUGD_WMEL/view?usp=sharing)
